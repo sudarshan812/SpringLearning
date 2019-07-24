@@ -13,9 +13,14 @@ pipeline {
                 ''' 
             }
         }
-        stage('build') {
+    stage ('Build') {
             steps {
-               echo 'This is a minimal pipeline.'
+                bat 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml' 
+                }
             }
         }
     }
